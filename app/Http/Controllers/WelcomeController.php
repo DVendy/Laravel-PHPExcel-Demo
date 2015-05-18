@@ -66,7 +66,7 @@ class WelcomeController extends Controller {
 		for ($row = 2; $row <= $highestRow; $row++) {
 		    //  Read a row of data into an array
 			$rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row, 
-				NULL, TRUE, FALSE);
+				NULL, FALSE, FALSE);
 			foreach($rowData as $key){
 				//uncomment row below to see row's data
 				//var_dump($key);
@@ -78,17 +78,17 @@ class WelcomeController extends Controller {
 			}
 			//we insert each 5000 data to database, because bulk insert has a limit each insertion
 			if ($row % 5000 == 0){
-				Pirate::insert($pirates);
+				//Pirate::insert($pirates);
 				$pirates = []; //empty the array
 			}
 		}
-		Pirate::insert($pirates); //after iteration, if there are datas left, we insert it again
+		//Pirate::insert($pirates); //after iteration, if there are datas left, we insert it again
 
 		$time2 = microtime(true);
 		echo "sampai masukin ke db: ". round(($time2-$time1), 2). "<br>"; 
 		echo "memory sekarang " . memory_get_usage()/1000000 . " MB <br>";
 		//uncommment this part if you want to read the execution tima and memory usage
-		//die();
+		die();
 		return redirect('/');
 	}
 
